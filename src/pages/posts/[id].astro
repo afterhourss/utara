@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/Button';
+import { getCollection, render } from 'astro:content';
+export async function getStaticPaths() {
+    const projectEntries = await getCollection('blog')
+    return projectEntries.map(entry => ({
+        params: { id: entry.id  }, props: { entry },
+    }));
+}   
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+
+---
+<Layout title='Project'>
+    <div class="text-white px-7 lg:px-28 pt-14 lg:w-[1000px] mx-auto">
+        <div class="py-10">
+            <a href="/"><Button title="Back to home" bg={false}/></a>
+        </div>
+        <h1 class="text-6xl pb-7">{entry.data.title}</h1>
+        <p class="text-2xl pb-7 text-neutral-400 text-justify">{entry.data.desc}</p>
+        <div>
+            <img src={entry.data.image} alt="" class="w-full"/>
+            <p class="text-center text-neutral-400 underline py-4">{entry.data.alt}</p>
+        </div>
+        <div class="py-6 lg:flex justify-between text-neutral-400">
+            <div class="flex">Tags : {entry.data.tags.map(tag => {
+                return <p>|{tag}|</p>
+            })}</div>
+            <p>{entry.data.date}</p>
+        </div>
+        <div class="prose-xl prose-invert text-justify py-10 mx-auto">
+            <Content/>
+        </div>
+    </div>
+</Layout>
