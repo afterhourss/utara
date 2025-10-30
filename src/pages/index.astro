@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../config/site';
 import Button from '../components/Button';
 import Projectbar from '../components/Projectbar'
 import treeImage from '../assets/tree.jpg'
@@ -36,18 +37,19 @@ const brandLogo = [
 ]
 ---
 
-<Layout title="North">
+<Layout title={siteConfig.profile.name}>
 	<div class="lg:w-[70%] px-5 lg:px-20 mx-auto">
 		<div class="border-b border-[#2C2C2C]">
 			<div class="text-[#9C9C9C] py-10 underline text-xl" id="about">About me</div>
 			<div class="flex gap-8 pb-8 flex-col xl:flex-row">	
 				<Image src={treeImage} alt="some tree" class="rounded-md object-fill w-72 h-72" loading='eager'/>
 				<div class="flex flex-col justify-between gap-4">
-					<div class="text-[#5B5B5B] text-xl text-justify"><span class="text-[#9C9C9C]">Halo saya Arrom Adipta Bagas</span> Fresh Graduate D3 Akuntansi dengan pengalaman kerja sebagai akuntan dan data analyst dengan mencatat, menyediakan, mengelola informasi keuangan yang berguna sebagai insight perusahaan. Memiliki ketelitian, kemampuan analisis, dan pemahaman PSAK untuk mendukung keputusan. Dengan track record pendidikan dan pengalaman di bidang akuntansi dan teknologi, memilki antusiasme dalam berkontribusi untuk meningkatkan kinerja perusahaan.</div>
+					<div class="text-[#5B5B5B] text-xl text-justify" set:html={siteConfig.profile.description}>
+					</div>
 					<div class="flex gap-4 justify-between flex-col lg:flex-row">
 						<div class="flex gap-2 flex-wrap">
 							<a href="#target"><Button title="See what i wrote" bg={true}/></a>
-							<a href="https://drive.google.com/file/d/1koVDLyhSRlGG1U1PjEDD12tUBe0t3mEJ/view?usp=sharing" target="_blank"><Button title="Download my CV" bg={false}/></a>
+							<a href={siteConfig.profile.cvUrl} target="_blank"><Button title="Download my CV" bg={false}/></a>
 						</div>
 						<div class="flex gap-7 flex-wrap">
 							{brandLogo.map((item) => {
